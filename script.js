@@ -40,7 +40,7 @@ const GameController = (() => {
 
         if (valid) {
             console.log(`${currentPlayer.name} & ${currentPlayer.symbol} moves to ${index} `);
-            console.log(Gameboard.getBoard());
+            console.log(printBoard());
 
             const result = checkWin();
             if (result) {
@@ -101,11 +101,21 @@ const GameController = (() => {
         currentPlayer = player1;
     };
 
+    const printBoard = () => {
+        const board = Gameboard.getBoard();
+        console.log(`
+    ${board[0]} | ${board[1]} | ${board[2]}
+    ---------
+    ${board[3]} | ${board[4]} | ${board[5]}
+    ---------
+    ${board[6]} | ${board[7]} | ${board[8]}
+    `);
+    };
 
-    
-    return { playRound, resetGame };
+
+    return { playRound, resetGame, printBoard };
 
 
 
-})(); 
+})();
 
