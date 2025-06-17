@@ -20,3 +20,6 @@ const Gameboard = (() => {
     return { placeMarker, getBoard, reset };
 })();
 
+const Player = (name, symbol) => {
+    return { name, symbol };
+};
