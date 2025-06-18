@@ -137,17 +137,62 @@ start.addEventListener('click',function(){
 
     // Move the declaration and initialization of boardContainer here
     const boardContainer = document.querySelector(".board");
-    boardContainer.innerHTML = `<div class = "game-cell"> </div>
-    <div class = "game-cell"> </div>
-    <div class = "game-cell"> </div>
-    <div class = "game-cell"> </div>
-    <div class = "game-cell"> </div>
-    <div class = "game-cell"> </div>
-    <div class = "game-cell"> </div>
-    <div class = "game-cell"> </div>
-    <div class = "game-cell"> </div>  `;
+    boardContainer.innerHTML = `
+    <div class = "game-cell" id="cell-0"> </div>
+    <div class = "game-cell" id="cell-1"> </div>
+    <div class = "game-cell" id="cell-2"> </div>
+    <div class = "game-cell" id="cell-3"> </div>
+    <div class = "game-cell" id="cell-4"> </div>
+    <div class = "game-cell" id="cell-5"> </div>
+    <div class = "game-cell" id="cell-6"> </div>
+    <div class = "game-cell" id="cell-7"> </div>
+    <div class = "game-cell" id="cell-8"> </div>  `;
     
     if (gameboardContainer) {
         gameboardContainer.style.display = "hidden";
     }
 });
+
+const cells = document.querySelectorAll(".game-cell");
+
+cells.forEach((cell) => {
+    cell.addEventListener("click", () => {
+        const index = parseInt(cell.id.split('-')[1]);
+        console.log("Clicked cell index:", index);
+        GameController.playRound(index);
+    });
+});
+
+
+let playerOneType = "";
+let playerTwoType = "";
+
+const p1Humanbtn = document.querySelector(".player-one .human");
+const p1Botbtn = document.querySelector(".player-one .bot");
+const p2Humanbtn = document.querySelector(".player-two .human");
+const p2Botbtn = document.querySelector(".player-two .bot");
+
+p1Humanbtn.addEventListener("click", () => {
+    playerOneType = "Human";
+    p1Humanbtn.classList.add("selected");
+    p1Botbtn.classList.remove("selected");
+});
+
+p1Botbtn.addEventListener("click", () => {
+    playerOneType = "Bot";
+    p1Humanbtn.classList.remove("selected");
+    p1Botbtn.classList.add("selected");
+});
+
+p2Humanbtn.addEventListener("click", () => {
+    playerTwoType = "Human";
+    p2Humanbtn.classList.add("selected");
+    p2Botbtn.classList.remove("selected");
+});
+
+p2Botbtn.addEventListener("click", () => {
+    playerTwoType = "Bot";
+    p2Humanbtn.classList.remove("selected");
+    p2Botbtn.classList.add("selected");
+});
+    

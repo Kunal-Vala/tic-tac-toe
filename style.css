@@ -107,3 +107,10 @@ body {
   height: 100vh; /* Make it fill the full viewport height */
   flex-direction: column; /* Optional, keeps message and board stacked */
 }
+
+
+.selected {
+  background-color: #f7b731; /* Highlight color */
+  color: white;
+  box-shadow: 0 0 10px #f7b731;
+}
