@@ -39,28 +39,27 @@ const GameController = (() => {
     let gameOver = false;
 
     const playRound = (index) => {
-        if (gameOver) return;
+        if (gameOver) return { status: "over" };
 
         const valid = Gameboard.placeMarker(index, currentPlayer.symbol);
 
         if (valid) {
-            console.log(`${currentPlayer.name} & ${currentPlayer.symbol} moves to ${index} `);
-            console.log(printBoard());
-
             const result = checkWin();
             if (result) {
                 gameOver = true;
-                console.log(`${currentPlayer.name} wins!`);
+                return { status: "win", winner: currentPlayer.symbol };
             } else if (isDraw()) {
                 gameOver = true;
-                console.log("It's a draw!");
+                return { status: "draw" };
             } else {
                 switchPlayer();
+                return { status: "next", nextPlayer: currentPlayer.symbol };
             }
-        } else {
-            console.log("Invalid move! Cell already taken.");
         }
+
+        return { status: "invalid" };
     };
+
 
 
     const checkWin = () => {
@@ -118,7 +117,7 @@ const GameController = (() => {
     };
 
 
-    return { playRound, resetGame, printBoard };
+    return { playRound, resetGame, printBoard, checkWin };
 
 })();
 
@@ -127,7 +126,12 @@ const GameController = (() => {
 const start = document.querySelector(".start-game");
 const gameboardContainer = document.querySelector(".gameboard");
 
-start.addEventListener('click',function(){
+start.addEventListener('click', function () {
+    if (playerOneType === "" || playerTwoType === "") {
+        alert("Please select player types for both players!");
+        return;
+    }
+
     console.log("Start Button Clicked");
 
     const container = document.querySelector(".container");
@@ -147,20 +151,57 @@ start.addEventListener('click',function(){
     <div class = "game-cell" id="cell-6"> </div>
     <div class = "game-cell" id="cell-7"> </div>
     <div class = "game-cell" id="cell-8"> </div>  `;
-    
+
     if (gameboardContainer) {
         gameboardContainer.style.display = "hidden";
     }
-});
 
-const cells = document.querySelectorAll(".game-cell");
+    const player1 = p1Humanbtn || p1Botbtn;
+    const player2 = p2Humanbtn || p2Botbtn;
 
-cells.forEach((cell) => {
-    cell.addEventListener("click", () => {
-        const index = parseInt(cell.id.split('-')[1]);
-        console.log("Clicked cell index:", index);
-        GameController.playRound(index);
+
+    const cells = document.querySelectorAll(".game-cell");
+
+    cells.forEach((cell) => {
+        cell.addEventListener("click", () => {
+            const index = parseInt(cell.id.split('-')[1]);
+            const board = Gameboard.getBoard();
+            const message = document.querySelector(".display-message");
+
+            if (board[index] !== "") return; // already filled
+
+            const result = GameController.playRound(index);
+            cell.textContent = board[index];
+            cell.style.pointerEvents = "none";
+
+            if (result.status === "win") {
+                message.textContent = `${result.winner} wins!`;
+            } else if (result.status === "draw") {
+                message.textContent = "It's a draw!";
+            } else if (result.status === "next") {
+                message.textContent = `Next turn: ${result.nextPlayer}`;
+            } else if (result.status === "invalid") {
+                message.textContent = "Invalid move!";
+            }
+
+        });
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
 
@@ -195,4 +236,4 @@ p2Botbtn.addEventListener("click", () => {
     p2Humanbtn.classList.remove("selected");
     p2Botbtn.classList.add("selected");
 });
-    
+

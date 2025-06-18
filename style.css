@@ -98,6 +98,8 @@ body {
     grid-template-rows: repeat(3, 250px);
     margin: auto;
     gap: 5px;
+    font-size: 10rem;
+    text-align: center;
 }
 
 .gameboard {
@@ -113,4 +115,11 @@ body {
   background-color: #f7b731; /* Highlight color */
   color: white;
   box-shadow: 0 0 10px #f7b731;
+}
+
+.display-message{
+    color: #FFE3A9;
+    font-size: 5rem;
+    padding: 10px;
+    margin: 5px;
 }
