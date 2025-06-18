@@ -162,3 +162,100 @@ body {
 .restart-btn:hover {
   background-color: #0056b3;
 }
+
+
+@media (max-width: 768px) {
+    .heading {
+        font-size: 2.5rem;
+    }
+
+    .player-heading {
+        font-size: 1.5rem;
+        padding: 10px;
+    }
+
+    .button {
+        width: 80%;
+        font-size: 1.5rem;
+        padding: 15px;
+    }
+
+    .start-game {
+        margin: 20px;
+        font-size: 1.5rem;
+        padding: 15px;
+    }
+
+    .board {
+        grid-template-columns: repeat(3, 80px);
+        grid-template-rows: repeat(3, 80px);
+        gap: 4px;
+        font-size: 3rem;
+    }
+
+    .game-cell {
+        width: 80px;
+        height: 80px;
+    }
+
+    .display-message {
+        font-size: 2rem;
+        padding: 5px;
+        margin: 5px;
+    }
+
+    .modal-content {
+        width: 80%;
+        font-size: 1.2rem;
+        padding: 20px;
+    }
+
+    .restart-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Tablet (iPad) styles */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .heading {
+    font-size: 3.5rem;
+  }
+
+  .player-heading {
+    font-size: 1.8rem;
+    padding: 15px;
+  }
+
+  .button {
+    width: 50%;
+    font-size: 1.8rem;
+    padding: 18px;
+  }
+
+  .board {
+    grid-template-columns: repeat(3, 150px);
+    grid-template-rows: repeat(3, 150px);
+    font-size: 5rem;
+    gap: 5px;
+  }
+
+  .game-cell {
+    width: 150px;
+    height: 150px;
+  }
+
+  .display-message {
+    font-size: 3.5rem;
+  }
+
+  .modal-content {
+    font-size: 1.3rem;
+    padding: 25px;
+  }
+
+  .restart-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+}
