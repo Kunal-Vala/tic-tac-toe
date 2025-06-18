@@ -37,6 +37,8 @@ const GameController = (() => {
 
     let currentPlayer = player1;
     let gameOver = false;
+    const getCurrentPlayer = () => currentPlayer;
+
 
     const playRound = (index) => {
         if (gameOver) return { status: "over" };
@@ -117,7 +119,7 @@ const GameController = (() => {
     };
 
 
-    return { playRound, resetGame, printBoard, checkWin };
+    return { playRound, resetGame, printBoard, checkWin , getCurrentPlayer};
 
 })();
 
@@ -153,7 +155,7 @@ start.addEventListener('click', function () {
     <div class = "game-cell" id="cell-8"> </div>  `;
 
     if (gameboardContainer) {
-        gameboardContainer.style.display = "hidden";
+        gameboardContainer.style.display = "flex";
     }
 
     const player1 = p1Humanbtn || p1Botbtn;
@@ -176,8 +178,13 @@ start.addEventListener('click', function () {
 
             if (result.status === "win") {
                 message.textContent = `${result.winner} wins!`;
+                showModal(`${GameController.getCurrentPlayer().name} wins!`);
+
+
             } else if (result.status === "draw") {
                 message.textContent = "It's a draw!";
+                showModal("It's a draw!");
+
             } else if (result.status === "next") {
                 message.textContent = `Next turn: ${result.nextPlayer}`;
             } else if (result.status === "invalid") {
@@ -186,19 +193,6 @@ start.addEventListener('click', function () {
 
         });
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -235,5 +229,24 @@ p2Botbtn.addEventListener("click", () => {
     playerTwoType = "Bot";
     p2Humanbtn.classList.remove("selected");
     p2Botbtn.classList.add("selected");
+});
+
+const modal = document.getElementById("gameOverModal");
+const modalMessage = document.querySelector(".modal-message");
+
+function showModal(message) {
+    modalMessage.textContent = message;
+    modal.style.display = "flex";
+}
+
+const restartBtn = document.querySelector(".restart-btn");
+
+restartBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+    GameController.resetGame();
+    document.querySelector(".container").style.display = "block";
+    document.querySelector(".display-message").textContent = ""; // ✅ reset message
+    document.querySelector(".board").innerHTML = ""; // ✅ clear board
+    document.querySelector(".gameboard").style.display = "none"; // ✅ hide gameboard
 });
 
