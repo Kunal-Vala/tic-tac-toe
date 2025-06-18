@@ -122,3 +122,32 @@ const GameController = (() => {
 
 })();
 
+
+
+const start = document.querySelector(".start-game");
+const gameboardContainer = document.querySelector(".gameboard");
+
+start.addEventListener('click',function(){
+    console.log("Start Button Clicked");
+
+    const container = document.querySelector(".container");
+    if (container) {
+        container.style.display = "none";
+    }
+
+    // Move the declaration and initialization of boardContainer here
+    const boardContainer = document.querySelector(".board");
+    boardContainer.innerHTML = `<div class = "game-cell"> </div>
+    <div class = "game-cell"> </div>
+    <div class = "game-cell"> </div>
+    <div class = "game-cell"> </div>
+    <div class = "game-cell"> </div>
+    <div class = "game-cell"> </div>
+    <div class = "game-cell"> </div>
+    <div class = "game-cell"> </div>
+    <div class = "game-cell"> </div>  `;
+    
+    if (gameboardContainer) {
+        gameboardContainer.style.display = "hidden";
+    }
+});
