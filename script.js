@@ -119,7 +119,7 @@ const GameController = (() => {
     };
 
 
-    return { playRound, resetGame, printBoard, checkWin , getCurrentPlayer};
+    return { playRound, resetGame, printBoard, checkWin, getCurrentPlayer };
 
 })();
 
@@ -187,12 +187,26 @@ start.addEventListener('click', function () {
 
             } else if (result.status === "next") {
                 message.textContent = `Next turn: ${result.nextPlayer}`;
+                const isBotTurn = (result.nextPlayer === "X" && playerOneType === "Bot") ||
+                    (result.nextPlayer === "O" && playerTwoType === "Bot");
+
+                if (isBotTurn) {
+                    setTimeout(botMove, 500); // small delay for better UX
+                }
             } else if (result.status === "invalid") {
                 message.textContent = "Invalid move!";
             }
 
         });
+
     });
+    const message = document.querySelector(".display-message");
+    message.textContent = `Next turn: ${GameController.getCurrentPlayer().symbol}`;
+
+    if ((GameController.getCurrentPlayer().symbol === "X" && playerOneType === "Bot") ||
+        (GameController.getCurrentPlayer().symbol === "O" && playerTwoType === "Bot")) {
+        setTimeout(botMove, 500);
+    }
 
 
 
@@ -250,3 +264,14 @@ restartBtn.addEventListener("click", () => {
     document.querySelector(".gameboard").style.display = "none"; // ✅ hide gameboard
 });
 
+function botMove() {
+    const board = Gameboard.getBoard();
+    const emptyCells = board
+        .map((cell, index) => (cell === "" ? index : null))
+        .filter(index => index !== null);
+
+    if (emptyCells.length === 0) return;
+
+    const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    document.getElementById(`cell-${randomIndex}`).click();
+}
