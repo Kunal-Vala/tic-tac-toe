@@ -20,9 +20,14 @@ const Gameboard = (() => {
     return { placeMarker, getBoard, reset };
 })();
 
+
+
+
 const Player = (name, symbol) => {
     return { name, symbol };
 };
+
+
 
 
 const GameController = (() => {
@@ -114,8 +119,6 @@ const GameController = (() => {
 
 
     return { playRound, resetGame, printBoard };
-
-
 
 })();
 
